@@ -3,7 +3,7 @@
 
 ## Environments
 
-* `DartpyCartPole-v0`
+* `DartReacher-v0`
 
 ## Build from Source
 
