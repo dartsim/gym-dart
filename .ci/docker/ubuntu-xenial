@@ -1,0 +1,15 @@
+FROM ubuntu:xenial
+
+RUN apt-get update -qq
+RUN apt-get install -y \
+    build-essential  \
+    cmake \
+    curl \
+    git \
+    lsb-release \
+    pkg-config \
+    python \
+    python-pip \
+    python-setuptools \
+    software-properties-common \
+    sudo
