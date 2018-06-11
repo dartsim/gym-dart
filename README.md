@@ -3,6 +3,8 @@
 
 ## Environments
 
+* `DartCartPole-v0`
+* `DartParticle-v0`
 * `DartReacher-v0`
 
 ## Build from Source
