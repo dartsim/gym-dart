@@ -1,0 +1,156 @@
+<?xml version="1.0" ?>
+<skel version="1.0">
+    <world name="world 1">
+        <physics>
+            <time_step>0.02</time_step>
+            <gravity>0 0 -9.8</gravity>
+            <collision_detector>fcl_mesh</collision_detector>
+        </physics>
+
+        <skeleton name="target">
+           <mobile>false</mobile>
+           <body name="link 1">
+                <transformation>0 0 0 0 0 -0.005</transformation>
+                <inertia>
+                    <mass>1</mass>
+                    <offset>0 0 0</offset>
+                </inertia>
+                <visualization_shape>
+                    <geometry>
+                        <sphere>
+                            <radius>0.009</radius>
+                        </sphere>
+                    </geometry>
+                    <color>0.9 0.2 0.2</color>
+                </visualization_shape>
+            </body>
+            <joint type="translational" name="joint 1">
+                <parent>world</parent>
+                <child>link 1</child>
+                <transformation>0 0 0 0 0 0</transformation>
+            </joint>
+        </skeleton>
+
+        <skeleton name="ground">
+           <mobile>false</mobile>
+           <body name="link 1">
+                <transformation>0 0 0 0 0 -0.005</transformation>
+                <visualization_shape>
+                    <geometry>
+                        <box>
+                            <size>1.0 1.0 0.01</size>
+                        </box>
+                    </geometry>
+                    <color>0.9 0.9 0.9</color>
+                </visualization_shape>
+            </body>
+             <joint type="weld" name="joint 1">
+                <parent>world</parent>
+                <child>link 1</child>
+            </joint>
+        </skeleton>
+
+        <skeleton name="arena south">
+           <mobile>false</mobile>
+           <body name="link 1">
+                <transformation>0 -0.3 0.01 0 1.570796327 0</transformation>
+                <visualization_shape>
+                    <geometry>
+                        <capsule>
+                            <radius>0.02</radius>
+                            <height>0.6</height>
+                        </capsule>
+                    </geometry>
+                    <color>0.9 0.4 0.6</color>
+                </visualization_shape>
+            </body>
+             <joint type="free" name="joint 1">
+                <parent>world</parent>
+                <child>link 1</child>
+            </joint>
+        </skeleton>
+
+        <skeleton name="arena east">
+           <mobile>false</mobile>
+           <body name="link 1">
+                <transformation>0.3 0 0.01 1.570796327 0 0</transformation>
+                <visualization_shape>
+                    <geometry>
+                        <capsule>
+                            <radius>0.02</radius>
+                            <height>0.6</height>
+                        </capsule>
+                    </geometry>
+                    <color>0.9 0.4 0.6</color>
+                </visualization_shape>
+            </body>
+             <joint type="free" name="joint 1">
+                <parent>world</parent>
+                <child>link 1</child>
+            </joint>
+        </skeleton>
+
+        <skeleton name="arena north">
+           <mobile>false</mobile>
+           <body name="link 1">
+                <transformation>0 0.3 0.01 0 1.570796327 0</transformation>
+                <visualization_shape>
+                    <geometry>
+                        <capsule>
+                            <radius>0.02</radius>
+                            <height>0.6</height>
+                        </capsule>
+                    </geometry>
+                    <color>0.9 0.4 0.6</color>
+                </visualization_shape>
+            </body>
+             <joint type="free" name="joint 1">
+                <parent>world</parent>
+                <child>link 1</child>
+            </joint>
+        </skeleton>
+
+        <skeleton name="arena west">
+           <mobile>false</mobile>
+           <body name="link 1">
+                <transformation>-0.3 0 0.01 1.570796327 0 0</transformation>
+                <visualization_shape>
+                    <geometry>
+                        <capsule>
+                            <radius>0.02</radius>
+                            <height>0.6</height>
+                        </capsule>
+                    </geometry>
+                    <color>0.9 0.4 0.6</color>
+                </visualization_shape>
+            </body>
+             <joint type="free" name="joint 1">
+                <parent>world</parent>
+                <child>link 1</child>
+            </joint>
+        </skeleton>
+
+        <skeleton name="particle">
+           <body name="particle link 1">
+                <transformation>0 0 0 0 0 -0.005</transformation>
+                <inertia>
+                    <mass>1</mass>
+                    <offset>0 0 0</offset>
+                </inertia>
+                <visualization_shape>
+                    <geometry>
+                        <sphere>
+                            <radius>0.009</radius>
+                        </sphere>
+                    </geometry>
+                    <color>0.9 0.2 0.2</color>
+                </visualization_shape>
+            </body>
+            <joint type="translational" name="particle joint 1">
+                <parent>world</parent>
+                <child>particle link 1</child>
+                <transformation>0 0 0 0 0 0</transformation>
+            </joint>
+        </skeleton>
+    </world>
+</skel>

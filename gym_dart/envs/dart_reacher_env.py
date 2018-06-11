@@ -2,7 +2,7 @@ import numpy as np
 import numpy.linalg as la
 
 from gym_dart.envs import DartEnv
-
+import gym.spaces as spaces
 
 class DartReacherEnv(DartEnv):
 
@@ -21,23 +21,26 @@ class DartReacherEnv(DartEnv):
         self.target = self.target_skeleton.getRootBodyNode()
         assert self.target is not None
 
-        self.max_time_steps = 10000
+        self.max_time_steps = 1000
         self.current_step = 0
 
         # Observations
-        self.obs_dim = 11
+        self.obs_dim = 10
         self.obs_max = np.array([
             1.0, 1.0,  # cos(joint_angles_of_reacher)
             1.0, 1.0,  # sin(joint_angles_of_reacher)
             0.2, 0.2,  # XY_position_of_target
-            5, 5,  # joint_velocities_of_reacher
-            0.41, 0.41, 1e-6  # com_of_fingertip - com_of_target
+            5, 5,      # joint_velocities_of_reacher
+            0.4, 0.4,  # com_of_fingertip - com_of_target
         ])
-        self.state_min = -self.obs_max
-        self.initial_reacher_pos_lower_limits = np.ones(2) * -3
-        self.initial_reacher_pos_upper_limits = np.ones(2) * 3
-        self.initial_target_pos_lower_limits = np.ones(2) * -0.2
-        self.initial_target_pos_upper_limits = np.ones(2) * 0.2
+        self.obs_min = -self.obs_max
+        self.initial_reacher_pos_lower_limits = np.ones(2) * -0.1
+        self.initial_reacher_pos_upper_limits = np.ones(2) * 0.1
+        # self.initial_target_pos_lower_limits = np.ones(2) * -0.2
+        self.initial_target_pos_lower_limits = np.array([-0.2, -0.001])
+        # self.initial_target_pos_upper_limits = np.ones(2) * 0.2
+        self.initial_target_pos_upper_limits = np.array([-0.199, 0.])
+        self.observation_space = spaces.Box(low=self.obs_min, high=self.obs_max)
 
         # Goal
         self.goal_dim = 2
@@ -47,8 +50,9 @@ class DartReacherEnv(DartEnv):
 
         # Action
         self.action_dim = 2
-        self.actuator_lower_limits = np.ones(self.action_dim) * 2.0
-        self.actuator_upper_limits = -self.actuator_lower_limits
+        self.actuator_upper_limits = np.ones(self.action_dim) * 1000.
+        self.actuator_lower_limits = -self.actuator_upper_limits
+        self.action_space = spaces.Box(low=self.actuator_lower_limits, high=self.actuator_upper_limits)
 
         self.reset()
 
@@ -58,7 +62,8 @@ class DartReacherEnv(DartEnv):
         obs = self._get_obs()
         done = self._is_done()
         self.current_step += 1
-        return obs, reward, done
+        info = None
+        return obs, reward, done, info
 
     def reset(self):
         self.world.reset()
@@ -72,6 +77,11 @@ class DartReacherEnv(DartEnv):
 
         target_pos \
             = np.random.uniform(self.initial_target_pos_lower_limits, self.initial_target_pos_upper_limits)
+        while True:
+            target_pos \
+                = np.random.uniform(self.initial_target_pos_lower_limits, self.initial_target_pos_upper_limits)
+            if la.norm(target_pos)<0.2 and la.norm(target_pos)>0.01:
+                break
         self.target_skeleton.setPosition(0, target_pos[0])
         self.target_skeleton.setPosition(1, target_pos[1])
 
@@ -94,14 +104,13 @@ class DartReacherEnv(DartEnv):
             np.sin(reacher_pos).flatten(),
             target_xy.flatten(),
             reacher_vel.flatten(),
-            (finger_tip_com - target_com).flatten()
+            (finger_tip_com - target_com).flatten()[:2]
         ])
 
     def _step_world(self, action):
         if self._is_done():
             return 0
-
-        action = np.clip(action, self.get_action_min(), self.get_action_max())
+        action = np.array(action).astype(float)
         self.reacher.setCommands(action)
         self.world.step()
 
@@ -111,9 +120,9 @@ class DartReacherEnv(DartEnv):
     def _get_reward(self, action):
         fingertip_com = self.finger_tip.getCOM()
         target_com = self.target.getCOM()
-        diff = fingertip_com - target_com
+        diff = (fingertip_com - target_com).flatten()[:2]
 
         reward_distance = -la.norm(diff)
         reward_control = -la.norm(action)
 
-        return reward_distance + 0.01 * reward_control
+        return reward_distance + 0.00001*reward_control
