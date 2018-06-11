@@ -10,6 +10,6 @@ fi
 sudo add-apt-repository ppa:dartsim/ppa -y
 sudo add-apt-repository ppa:personalrobotics/ppa -y
 sudo apt-get update -y
-sudo apt-get install python3-dartpy -y
+sudo apt-get install python3-pip python3-dartpy -y
 
 sudo python3 -m pip install -U pytest
