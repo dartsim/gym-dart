@@ -36,8 +36,10 @@ class DartReacherEnv(DartEnv):
         self.obs_min = -self.obs_max
         self.initial_reacher_pos_lower_limits = np.ones(2) * -0.1
         self.initial_reacher_pos_upper_limits = np.ones(2) * 0.1
-        self.initial_target_pos_lower_limits = np.ones(2) * -0.2
-        self.initial_target_pos_upper_limits = np.ones(2) * 0.2
+        # self.initial_target_pos_lower_limits = np.ones(2) * -0.2
+        self.initial_target_pos_lower_limits = np.array([-0.2, -0.001])
+        # self.initial_target_pos_upper_limits = np.ones(2) * 0.2
+        self.initial_target_pos_upper_limits = np.array([-0.199, 0.])
         self.observation_space = spaces.Box(low=self.obs_min, high=self.obs_max)
 
         # Goal
@@ -48,7 +50,7 @@ class DartReacherEnv(DartEnv):
 
         # Action
         self.action_dim = 2
-        self.actuator_upper_limits = np.ones(self.action_dim) * 0.5
+        self.actuator_upper_limits = np.ones(self.action_dim) * 1000.
         self.actuator_lower_limits = -self.actuator_upper_limits
         self.action_space = spaces.Box(low=self.actuator_lower_limits, high=self.actuator_upper_limits)
 
@@ -78,7 +80,7 @@ class DartReacherEnv(DartEnv):
         while True:
             target_pos \
                 = np.random.uniform(self.initial_target_pos_lower_limits, self.initial_target_pos_upper_limits)
-            if la.norm(target_pos)<0.2:
+            if la.norm(target_pos)<0.2 and la.norm(target_pos)>0.01:
                 break
         self.target_skeleton.setPosition(0, target_pos[0])
         self.target_skeleton.setPosition(1, target_pos[1])
@@ -123,4 +125,4 @@ class DartReacherEnv(DartEnv):
         reward_distance = -la.norm(diff)
         reward_control = -la.norm(action)
 
-        return reward_distance + 0.01 * reward_control
+        return reward_distance + 0.00001*reward_control
