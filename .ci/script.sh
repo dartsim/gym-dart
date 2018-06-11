@@ -4,4 +4,4 @@ set -ex
 
 sudo python3 -m pip install -e .
 
-pytest tests
+python3 -m pytest tests
