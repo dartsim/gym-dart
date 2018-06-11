@@ -6,6 +6,11 @@ register(
 )
 
 register(
+    id='DartParticle-v0',
+    entry_point='gym_dart.envs:DartParticleEnv',
+)
+
+register(
     id='DartReacher-v0',
     entry_point='gym_dart.envs:DartReacherEnv',
 )
