@@ -2,6 +2,6 @@
 
 set -ex
 
-sudo pip install -e .
+sudo python3 -m pip install -e .
 
 pytest tests
