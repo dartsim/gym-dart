@@ -16,7 +16,7 @@
 * Using `pip`
 
 ```console
-$ pip3 install gym
+$ python3 -m pip install -U gym
 ```
 
 * Build from source
@@ -24,7 +24,7 @@ $ pip3 install gym
 ```console
 $ git clone https://github.com/openai/gym
 $ cd gym
-$ pip install -e .
+$ python3 -m pip install -e .
 ```
 
 ### dartpy
@@ -41,9 +41,9 @@ $ suao apt install python3-dartpy
 ```console
 $ git clone https://github.com/dartsim/gym-dart
 $ cd gym-dart
-$ pip install -e .
+$ python3 -m pip install -e .
 ```
 
 ## License
 
-gym-dart is licensed under a BSD license. See [LICENSE](./LICENSE) for more information.
+`gym-dart` is licensed under a BSD license. See [LICENSE](./LICENSE) for more information.
