@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<skel version="1.0">
+    <skeleton name="target">
+       <mobile>false</mobile>
+       <body name="link 1">
+            <transformation>0 0 0 0 0 -0.005</transformation>
+            <inertia>
+                <mass>1</mass>
+                <offset>0 0 0</offset>
+            </inertia>
+            <visualization_shape>
+                <geometry>
+                    <sphere>
+                        <radius>0.009</radius>
+                    </sphere>
+                </geometry>
+                <color>0.9 0.2 0.2</color>
+            </visualization_shape>
+        </body>
+        <joint type="translational" name="joint 1">
+            <parent>world</parent>
+            <child>link 1</child>
+            <transformation>0 0 0 0 0 0</transformation>
+        </joint>
+    </skeleton>
+</skel>

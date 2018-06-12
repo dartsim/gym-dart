@@ -67,6 +67,8 @@ class DartEnv(gym.Env):
             for skeleton_path in skeleton_paths:
                 skeleton_path = get_asset_full_path(skeleton_path)
                 skeleton = load_skeleton(skeleton_path)
+                if skeleton is None:
+                    raise ValueError("Failed to load skeleton from file '{}'".format(skeleton_path))
                 self.world.addSkeleton(skeleton)
 
     def visualize(self):

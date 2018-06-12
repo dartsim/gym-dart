@@ -6,7 +6,8 @@ import pytest
 env_names = [
     'DartCartPole-v0',
     'DartParticle-v0',
-    'DartReacher-v0'
+    'DartReacher-v0',
+    'DartWamArmReacher-v0'
 ]
 
 

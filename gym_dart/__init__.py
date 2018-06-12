@@ -14,3 +14,8 @@ register(
     id='DartReacher-v0',
     entry_point='gym_dart.envs:DartReacherEnv',
 )
+
+register(
+    id='DartWamArmReacher-v0',
+    entry_point='gym_dart.envs:DartWamArmReacherEnv',
+)
