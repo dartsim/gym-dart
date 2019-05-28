@@ -1,4 +1,4 @@
-from os import path
+import os
 
 import dartpy as dart
 import gym
@@ -10,14 +10,14 @@ def get_asset_full_path(model_path):
     else:
         full_path = os.path.join(os.path.dirname(__file__), "assets", model_path)
 
-    if not path.exists(full_path):
+    if not os.path.exists(full_path):
         raise IOError("File %s does not exist" % full_path)
 
     return full_path
 
 
 def load_world(full_path):
-    if not path.exists(full_path):
+    if not os.path.exists(full_path):
         raise IOError("File %s does not exist" % full_path)
 
     if full_path[-5:] == '.urdf':
@@ -25,14 +25,14 @@ def load_world(full_path):
         world = urdf_loader.parseWorld(full_path)
         return world
     elif full_path[-5:] == '.skel':
-        world = dart.utils.skel.readWorld(full_path)
+        world = dart.utils.SkelParser.readWorld(full_path)
         return world
     else:
         raise NotImplementedError
 
 
 def load_skeleton(full_path):
-    if not path.exists(full_path):
+    if not os.path.exists(full_path):
         raise IOError("File %s does not exist" % full_path)
 
     if full_path[-5:] == '.urdf':
@@ -40,7 +40,7 @@ def load_skeleton(full_path):
         world = urdf_loader.parseSkeleton(full_path)
         return world
     elif full_path[-5:] == '.skel':
-        world = dart.utils.skel.readSkeleton(full_path)
+        world = dart.utils.SkelParser.readSkeleton(full_path)
         return world
     else:
         raise NotImplementedError

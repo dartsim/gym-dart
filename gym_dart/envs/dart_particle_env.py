@@ -73,7 +73,7 @@ class DartParticleEnv(DartEnv):
         self.particle_skeleton.setPosition(1, particle_pos[1])
         self.particle_skeleton.resetVelocities()
         self.particle_skeleton.resetAccelerations()
-        
+
         target_pos \
             = np.random.uniform(self.initial_target_pos_lower_limits, self.initial_target_pos_upper_limits)
         self.target_skeleton.setPosition(0, target_pos[0])
@@ -85,9 +85,9 @@ class DartParticleEnv(DartEnv):
         pass
 
     def _get_obs(self):
-        particle_xy_pos = self.particle_skeleton.getPositions()[:2,-1]
-        particle_xy_vel = self.particle_skeleton.getVelocities()[:2,-1]
-        target_xy_pos = self.target_skeleton.getPositions()[:2,-1]
+        particle_xy_pos = self.particle_skeleton.getPositions()[:2]
+        particle_xy_vel = self.particle_skeleton.getVelocities()[:2]
+        target_xy_pos = self.target_skeleton.getPositions()[:2]
         target_com = self.target.getCOM()
         particle_com = self.particle.getCOM()
         diff_com = (target_com - particle_com).flatten()[:2]

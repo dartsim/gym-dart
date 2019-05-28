@@ -95,7 +95,7 @@ class DartReacherEnv(DartEnv):
         reacher_pos = self.reacher.getPositions()
         reacher_vel = self.reacher.getVelocities()
         target_pose = self.target.getTransform()
-        target_xy = target_pose[:2, 3]
+        target_xy = target_pose.translation()[:2]
         target_com = self.target.getCOM()
         finger_tip_com = self.finger_tip.getCOM()
 

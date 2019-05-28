@@ -9,17 +9,15 @@ language: python
 matrix:
   include:
     - env:
-        - BUILD_NAME=UBUNTU_TRUSTY_3_4
+        - BUILD_NAME=UBUNTU_BIONIC_3_7
         - GYM_DARTPY_PYTHON_MAJOR_VERSION="3"
-    - env:
-        - BUILD_NAME=UBUNTU_XENIAL_3_5
-        - GYM_DARTPY_PYTHON_MAJOR_VERSION="3"
-        - DOCKER_FILE="ubuntu-xenial"
+        - DOCKER_FILE="ubuntu-disco"
       services: docker
+
     - env:
-        - BUILD_NAME=UBUNTU_BIONIC_3_6
+        - BUILD_NAME=UBUNTU_BIONIC_3_7
         - GYM_DARTPY_PYTHON_MAJOR_VERSION="3"
-        - DOCKER_FILE="ubuntu-bionic"
+        - DOCKER_FILE="ubuntu-eoan"
       services: docker
 
 before_install:
