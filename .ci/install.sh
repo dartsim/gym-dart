@@ -52,3 +52,10 @@ else
   echo -e "$(lsb_release -sc) is not supported."
   exit 1
 fi
+
+sudo apt-get install -y \
+  # python3-dartpy \
+  python3-pip \
+  python3-setuptools
+
+sudo python3 -m pip install -U pytest
