@@ -6,7 +6,7 @@ set -ex
 sudo apt-get install -y build-essential cmake pkg-config git
 sudo apt-get install -y libeigen3-dev libassimp-dev libccd-dev libfcl-dev libboost-regex-dev libboost-system-dev
 sudo apt-get install -y libtinyxml2-dev liburdfdom-dev
-sudo apt-get install -y libxi-dev libxmu-dev freeglut3-dev libopenscenegraph-dev
+sudo apt-get install -y freeglut3-dev libopenscenegraph-dev
 if [ $(lsb_release -sc) = "xenial" ]; then
   git clone https://github.com/pybind/pybind11 -b 'v2.2.4' --single-branch --depth 1
   cd pybind11
