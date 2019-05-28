@@ -17,6 +17,7 @@ if [ $(lsb_release -sc) = "xenial" ]; then
   make -j4
   sudo make install
   cd ../..
+  rm -rf pybind11
 elif [ $(lsb_release -sc) = "bionic" ]; then
   git clone https://github.com/pybind/pybind11 -b 'v2.2.4' --single-branch --depth 1
   cd pybind11
@@ -26,6 +27,7 @@ elif [ $(lsb_release -sc) = "bionic" ]; then
   make -j4
   sudo make install
   cd ../..
+  rm -rf pybind11
 elif [ $(lsb_release -sc) = "cosmic" ]; then
   sudo apt-get install -y pybind11-dev
 elif [ $(lsb_release -sc) = "disco" ]; then
