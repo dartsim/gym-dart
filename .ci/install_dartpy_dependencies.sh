@@ -15,7 +15,7 @@ if [ $(lsb_release -sc) = "xenial" ]; then
   cd build
   cmake .. -DCMAKE_BUILD_TYPE=Release -DPYBIND11_TEST=OFF
   make -j4
-  $SUDO make install
+  sudo make install
   cd ../..
 elif [ $(lsb_release -sc) = "bionic" ]; then
   git clone https://github.com/pybind/pybind11 -b 'v2.2.4' --single-branch --depth 1
@@ -24,7 +24,7 @@ elif [ $(lsb_release -sc) = "bionic" ]; then
   cd build
   cmake .. -DCMAKE_BUILD_TYPE=Release -DPYBIND11_TEST=OFF
   make -j4
-  $SUDO make install
+  sudo make install
   cd ../..
 elif [ $(lsb_release -sc) = "cosmic" ]; then
   sudo apt-get install -y pybind11-dev
