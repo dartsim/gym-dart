@@ -2,8 +2,6 @@ from os import path
 
 import dartpy as dart
 import gym
-from OpenGL.GLUT import *
-from dartpy.gui import SimWindow
 
 
 def get_asset_full_path(model_path):
@@ -57,7 +55,7 @@ class DartEnv(gym.Env):
 
         self.name = name
         if world_path is None:
-            self.world = dart.simulation.World.create()
+            self.world = dart.simulation.World()
         else:
             world_path = get_asset_full_path(world_path)
             self.world = load_world(world_path)
@@ -70,9 +68,24 @@ class DartEnv(gym.Env):
                 self.world.addSkeleton(skeleton)
 
     def visualize(self):
-        window = SimWindow()
-        window.setWorld(self.world)
+        node = dart.gui.osg.RealTimeWorldNode(self.world)
 
-        glutInit(sys.argv)
-        window.initWindow(640, 480, self.name)
-        glutMainLoop()
+        # Create world node and add it to viewer
+        viewer = dart.gui.osg.Viewer()
+        viewer.addWorldNode(node)
+
+        # Create world node and add it to viewer
+        viewer = dart.gui.osg.Viewer()
+        viewer.addWorldNode(node)
+
+        # Grid settings
+        grid = dart.gui.osg.GridVisual()
+        grid.setPlaneType(dart.gui.osg.GridVisual.PlaneType.ZX)
+        grid.setOffset([0, -0.55, 0])
+        viewer.addAttachment(grid)
+
+        viewer.setUpViewInWindow(0, 0, 640, 480)
+        viewer.setCameraHomePosition([2.0, 1.0, 2.0],
+                                     [0.00, 0.00, 0.00],
+                                     [-0.24, 0.94, -0.25])
+        viewer.run()

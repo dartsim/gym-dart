@@ -7,7 +7,7 @@ class DartCartPoleEnv(DartEnv):
     def __init__(self):
         DartEnv.__init__(self, world_path='cartpole.skel', name="Cartpole")
 
-        self.world.setGravity(np.array([0, 0, -9.8]))
+        self.world.setGravity([0, 0, -9.8])
         self.world.setTimeStep(0.01)
 
         self.cartpole = self.world.getSkeleton('cartpole')
