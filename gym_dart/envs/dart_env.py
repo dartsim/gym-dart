@@ -50,7 +50,7 @@ class DartEnv(gym.Env):
     """Superclass for all DART environments.
     """
 
-    def __init__(self, name='Noname', world_path=None, skeleton_paths=[]):
+    def __init__(self, name='Noname', world_path=None, model_paths=[]):
         gym.Env.__init__(self)
 
         self.name = name
@@ -61,11 +61,18 @@ class DartEnv(gym.Env):
             self.world = load_world(world_path)
         assert self.world is not None
 
-        if skeleton_paths:
-            for skeleton_path in skeleton_paths:
+        if model_paths:
+            for skeleton_path in model_paths:
                 skeleton_path = get_asset_full_path(skeleton_path)
                 skeleton = load_skeleton(skeleton_path)
                 self.world.addSkeleton(skeleton)
+
+        if self.world.getNumSkeletons() < 1:
+            raise StandardError("At least one model is needed.")
+
+        # Assume that the skeleton of interest is always the last one
+        self.robot_skeleton = self.world.getSkeleton(self.world.getNumSkeletons() - 1)
+
 
     def visualize(self):
         node = dart.gui.osg.RealTimeWorldNode(self.world)
