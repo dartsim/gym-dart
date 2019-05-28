@@ -2,7 +2,7 @@
 
 set -ex
 
-. ./install_dartpy_dependencies.sh
+source ./install_dartpy_dependencies.sh
 
 sudo apt-get install -y \
   python3-pip \
