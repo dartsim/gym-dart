@@ -21,7 +21,7 @@ steps:
   displayName: 'Use Python $(python.version)'
 
 - script: |
-    ./.ci/install.sh
+    ./.ci/install_dartpy_dependencies.sh
   displayName: 'Install dartpy dependencies'
 
 - script: |
