@@ -68,7 +68,7 @@ class DartEnv(gym.Env):
                 self.world.addSkeleton(skeleton)
 
         if self.world.getNumSkeletons() < 1:
-            raise StandardError("At least one model is needed.")
+            raise ValueError("At least one model is needed.")
 
         # Assume that the skeleton of interest is always the last one
         self.robot_skeleton = self.world.getSkeleton(self.world.getNumSkeletons() - 1)
