@@ -14,7 +14,7 @@ class DartReacherEnv(DartEnv):
 
         self.reacher = self.world.getSkeleton('reacher')
         assert self.reacher is not None
-        self.finger_tip = self.reacher.getBodyNode("fingertip")
+        self.finger_tip = self.reacher.getBodyNode('fingertip')
 
         self.target_skeleton = self.world.getSkeleton('target')
         assert self.target_skeleton is not None
