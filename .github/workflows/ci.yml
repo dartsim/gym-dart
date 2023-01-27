@@ -8,6 +8,9 @@ on:
     branches: [ "**" ]
   pull_request:
     branches: [ "main" ]
+  schedule:
+    # Cron syntax: [minute hour day_of_the_month month day_of_the_week]
+    - cron: "0 1 * * *"
 
 jobs:
   build:
