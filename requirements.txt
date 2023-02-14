@@ -1,4 +1,4 @@
 dartpy
-gym
+gymnasium
 numpy
 pytest

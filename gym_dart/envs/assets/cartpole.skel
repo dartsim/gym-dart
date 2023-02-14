@@ -4,7 +4,7 @@
         <physics>
             <time_step>0.02</time_step>
             <gravity>0 -9.81 0</gravity>
-            <collision_detector>bullet</collision_detector>
+            <!-- <collision_detector>bullet</collision_detector> -->
         </physics>
 
         <skeleton name="rail">
@@ -14,10 +14,10 @@
                 <visualization_shape>
                     <transformation>0 0 0 0 0 0</transformation>
                     <geometry>
-                        <capsule>
+                        <cylinder>
                             <height>2.0</height>
                             <radius>0.02</radius>
-                        </capsule>
+                        </cylinder>
                     </geometry>
                     <color>0.3 0.3 0.7 1</color>
                 </visualization_shape>
@@ -40,19 +40,19 @@
                 <visualization_shape>
                     <transformation>0.0 0 0.0 0 1.57 0</transformation>
                     <geometry>
-                        <capsule>
+                        <cylinder>
                             <height>0.2</height>
                             <radius>0.1</radius>
-                        </capsule>
+                        </cylinder>
                     </geometry>
                 </visualization_shape>
                 <collision_shape>
                     <transformation>0.0 0 0.0 0 1.57 0</transformation>
                     <geometry>
-                        <capsule>
+                        <cylinder>
                             <height>0.2</height>
                             <radius>0.1</radius>
-                        </capsule>
+                        </cylinder>
                     </geometry>
                 </collision_shape>
             </body>
@@ -66,19 +66,19 @@
                 <visualization_shape>
                     <transformation>0.0 0.3 0.0 1.57 0.0 0.0</transformation>
                     <geometry>
-                        <capsule>
+                        <cylinder>
                             <height>0.6</height>
                             <radius>0.049</radius>
-                        </capsule>
+                        </cylinder>
                     </geometry>
                 </visualization_shape>
                 <collision_shape>
                     <transformation>0.0 0.3 0.0 1.57 0.0 0.0</transformation>
                     <geometry>
-                        <capsule>
+                        <cylinder>
                             <height>0.6</height>
                             <radius>0.049</radius>
-                        </capsule>
+                        </cylinder>
                     </geometry>
                 </collision_shape>
             </body>

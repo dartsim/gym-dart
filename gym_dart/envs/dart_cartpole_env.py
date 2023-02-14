@@ -1,16 +1,41 @@
 import numpy as np
+import math
 
 from gym_dart.envs import DartEnv
+from gymnasium.spaces import Space
+from gymnasium import error, logger, spaces
+from gymnasium.spaces import Box
 
 
 class DartCartPoleEnv(DartEnv):
     def __init__(self):
-        DartEnv.__init__(self, world_path='cartpole.skel', name="Cartpole")
+        # Angle at which to fail the episode
+        self.theta_threshold_radians = 12 * 2 * math.pi / 360
+        self.x_threshold = 2.4
+
+        # Angle limit set to 2 * theta_threshold_radians so failing observation
+        # is still within bounds.
+        high = np.array(
+            [
+                self.x_threshold * 2,
+                np.finfo(np.float32).max,
+                self.theta_threshold_radians * 2,
+                np.finfo(np.float32).max,
+            ],
+            dtype=np.float32,
+        )
+
+        DartEnv.__init__(
+            self,
+            observation_space=Box(-high, high, dtype=np.float32),
+            world_path="cartpole.skel",
+            name="Cartpole",
+        )
 
         self.world.setGravity([0, 0, -9.8])
         self.world.setTimeStep(0.01)
 
-        self.cartpole = self.world.getSkeleton('cartpole')
+        self.cartpole = self.world.getSkeleton("cartpole")
 
         self.max_time_steps = 10000
         self.current_step = 0
@@ -34,6 +59,11 @@ class DartCartPoleEnv(DartEnv):
         self._action_dim = 1
         self.cart_velocity_upper_limits = np.ones(self._action_dim) * 5.0
         self.cart_velocity_lower_limits = -self.cart_velocity_upper_limits
+        self.action_space = spaces.Box(
+            low=self.cart_velocity_lower_limits,
+            high=self.cart_velocity_upper_limits,
+            dtype=np.float32,
+        )
 
         self.reset()
 
@@ -100,7 +130,9 @@ class DartCartPoleEnv(DartEnv):
         self.world.reset()
         self.current_step = 0
 
-        pos = np.random.uniform(self.initial_state_lower_limits, self.initial_state_upper_limits)
+        pos = np.random.uniform(
+            self.initial_state_lower_limits, self.initial_state_upper_limits
+        )
         self.cartpole.setPosition(0, pos[2])
         self.cartpole.setVelocity(0, pos[3])
         self.cartpole.setPosition(1, pos[0])
@@ -115,7 +147,9 @@ class DartCartPoleEnv(DartEnv):
         cart_pos = state[2]
 
         if np.abs(pole_theta) < self.theta_threshold:
-            reward = (self.theta_threshold - np.abs(pole_theta)) / self.theta_threshold + np.exp(-cart_pos)
+            reward = (
+                self.theta_threshold - np.abs(pole_theta)
+            ) / self.theta_threshold + np.exp(-cart_pos)
         else:
             reward = 0.0
 
@@ -147,4 +181,6 @@ class DartCartPoleEnv(DartEnv):
         is_pole_theta_out_of_bound = np.abs(pole_theta) > self.theta_threshold
         is_cart_out_of_bound = np.abs(cart_pos) > 1.0
 
-        return is_pole_theta_out_of_bound or is_cart_out_of_bound or has_step_reached_max
+        return (
+            is_pole_theta_out_of_bound or is_cart_out_of_bound or has_step_reached_max
+        )

@@ -1,7 +1,12 @@
+# Copyright (c) 2011-2023, The DART development contributors
+# All rights reserved.
+
 import os
 
 import dartpy as dart
-import gym
+import gymnasium as gym
+from gymnasium.spaces import Space
+from gymnasium import error, logger, spaces
 
 
 def get_asset_full_path(model_path):
@@ -20,12 +25,12 @@ def load_world(full_path):
     if not os.path.exists(full_path):
         raise IOError("File %s does not exist" % full_path)
 
-    if full_path[-5:] == '.urdf':
-        urdf_loader = dart.utils.DartLoader()
+    if full_path[-5:] == ".urdf":
+        urdf_loader = dart.io.DartLoader()
         world = urdf_loader.parseWorld(full_path)
         return world
-    elif full_path[-5:] == '.skel':
-        world = dart.utils.SkelParser.readWorld(full_path)
+    elif full_path[-5:] == ".skel":
+        world = dart.io.SkelParser.readWorld(full_path)
         return world
     else:
         raise NotImplementedError
@@ -35,22 +40,23 @@ def load_skeleton(full_path):
     if not os.path.exists(full_path):
         raise IOError("File %s does not exist" % full_path)
 
-    if full_path[-5:] == '.urdf':
-        urdf_loader = dart.utils.DartLoader()
+    if full_path[-5:] == ".urdf":
+        urdf_loader = dart.io.DartLoader()
         world = urdf_loader.parseSkeleton(full_path)
         return world
-    elif full_path[-5:] == '.skel':
-        world = dart.utils.SkelParser.readSkeleton(full_path)
+    elif full_path[-5:] == ".skel":
+        world = dart.io.SkelParser.readSkeleton(full_path)
         return world
     else:
         raise NotImplementedError
 
 
 class DartEnv(gym.Env):
-    """Superclass for all DART environments.
-    """
+    """Superclass for all DART environments."""
 
-    def __init__(self, name='Noname', world_path=None, model_paths=[]):
+    def __init__(
+        self, observation_space: Space, name="Noname", world_path=None, model_paths=[]
+    ):
         gym.Env.__init__(self)
 
         self.name = name
@@ -73,6 +79,8 @@ class DartEnv(gym.Env):
         # Assume that the skeleton of interest is always the last one
         self.robot_skeleton = self.world.getSkeleton(self.world.getNumSkeletons() - 1)
 
+        # Observation space
+        self.observation_space = observation_space
 
     def visualize(self):
         node = dart.gui.osg.RealTimeWorldNode(self.world)
@@ -92,7 +100,7 @@ class DartEnv(gym.Env):
         viewer.addAttachment(grid)
 
         viewer.setUpViewInWindow(0, 0, 640, 480)
-        viewer.setCameraHomePosition([2.0, 1.0, 2.0],
-                                     [0.00, 0.00, 0.00],
-                                     [-0.24, 0.94, -0.25])
+        viewer.setCameraHomePosition(
+            [2.0, 1.0, 2.0], [0.00, 0.00, 0.00], [-0.24, 0.94, -0.25]
+        )
         viewer.run()

@@ -16,6 +16,7 @@ jobs:
   build:
     name: CI on ${{ matrix.os }}, ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
+
     strategy:
       fail-fast: false
       matrix:
