@@ -1,7 +1,7 @@
 # gym-dart
 [OpenAI Gym](https://github.com/openai/gym) environments for [DART](https://github.com/dartsim/dart) and [dartpy](https://github.com/dartsim/dart/tree/master/python)
 
-[![CI](https://github.com/dartsim/gym-dart/actions/workflows/ci.yml/badge.svg)](https://github.com/dartsim/gym-dart/actions/workflows/ci.yml)
+[![CI](https://github.com/dartsim/gym-dart/actions/workflows/ci.yml/badge.svg)](https://github.com/dartsim/gym-dart/actions/workflows/ci.yml) [![Publish](https://github.com/dartsim/gym-dart/actions/workflows/publish.yml/badge.svg)](https://github.com/dartsim/gym-dart/actions/workflows/publish.yml)
 
 > :warning: **Warning:** `gym-dart` is under heavy development. See the open issues on [`gym-dart`](https://github.com/dartsim/gym-dart/issues) for insight into the current state of the project. Please report any issues you encounter on the appropriate repository. We will use `develop` branch (instead of `master`) as the default branch without worrying about the commit history until the API becomes stable.
 
