@@ -1,6 +1,8 @@
 name: CI (Conda)
 
-on: [push]
+on:
+  push:
+    # branches: ["**"]
 
 jobs:
   build-linux:
