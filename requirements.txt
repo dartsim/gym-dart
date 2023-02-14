@@ -2,3 +2,5 @@ dartpy
 gymnasium
 numpy
 pytest
+requests
+setuptools

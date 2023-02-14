@@ -10,34 +10,39 @@ name: Publish
 
 on:
   push:
-    branches: ["**"] # TODO: remove once become stable
+    branches: ["**"] # Trigger on pushes to the main branch
   pull_request:
-    branches: ["main"] # TODO: remove once become stable
+    branches: ["main"] # Trigger on pull requests to the main branch
   release:
-    types: [published]
+    types: [published] # Trigger on publishing a release
 
 permissions:
-  contents: read
+  contents: read # Allow reading repository contents
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2 # Checkout the repository
+
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v2 # Set up Python
         with:
           python-version: "3.x"
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install build
+
       - name: Build package
         run: python -m build
+
       - name: Publish package
-        uses: pypa/gh-action-pypi-publish@c7f29f7adef1a245bd91520e94867e5c6eedddcc
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
-          skip_existing: true
+          skip-existing: true # Skip publishing if the package already exists
